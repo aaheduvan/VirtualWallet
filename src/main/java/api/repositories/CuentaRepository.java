@@ -14,10 +14,10 @@ public interface CuentaRepository extends CrudRepository<Cuenta, Integer> {
 	List<Cuenta> findByMoneda(String moneda);
 	@Query(value = "SELECT *" + 
 					"FROM Cuenta" + 
-					"WHERE balance=(SELECT MAX(balance) FROM Cuenta);", nativeQuery = true)
+					"WHERE balance=(SELECT MAX(balance) FROM cuenta);", nativeQuery = true)
 	Optional<Cuenta> findMaxBalance();
 	@Query(value = "SELECT *" + 
 			"FROM Cuenta" + 
-			"WHERE balance=(SELECT MIN(balance) FROM Cuenta);", nativeQuery = true)
+			"WHERE balance=(SELECT MIN(balance) FROM cuenta);", nativeQuery = true)
 	Optional<Cuenta> findMinBalance();
 }

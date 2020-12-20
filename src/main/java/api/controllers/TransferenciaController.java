@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping(path="/cliente")
+@RequestMapping(path="/transferencia")
 public class TransferenciaController {
 	
 	@Autowired
@@ -34,7 +34,7 @@ public class TransferenciaController {
     }
     
     @GetMapping(value = "/get", params = {"timeStamp"})
-    public List<Transferencia> getTransferencia(@RequestParam (value="id") Timestamp timeStampTransferencia) {
+    public List<Transferencia> getTransferenciaByTimestamp(@RequestParam (value="id") Timestamp timeStampTransferencia) {
     	return transferenciaRepository.findByFechayHora(timeStampTransferencia);
     }
     

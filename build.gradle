@@ -33,7 +33,9 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:28.0-jre'
     
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	//compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+	compile 'mysql:mysql-connector-java:8.0.8-dmr'
     
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.8.RELEASE'
 
