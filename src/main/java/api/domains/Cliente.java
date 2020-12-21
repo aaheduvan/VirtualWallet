@@ -14,6 +14,7 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idCliente;
 	private String nombreCliente;
+	private String apellidoCliente;
 	private Integer cuit;
 		
 	public Long getIdCliente() {
@@ -27,6 +28,12 @@ public class Cliente {
 	}
 	public void setNombreCliente(String nombreCliente) {
 		this.nombreCliente = nombreCliente;
+	}
+	public String getApellidoCliente() {
+		return apellidoCliente;
+	}
+	public void setApellidoCliente(String apellidoCliente) {
+		this.apellidoCliente = apellidoCliente;
 	}
 	public Integer getCUIT() {
 		return cuit;

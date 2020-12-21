@@ -39,13 +39,15 @@ public class ClienteController {
     	return clienteRepository.findAll();
     }
     
-    @PostMapping(value= "/add", params = {"nombreCliente","cuit"}) // Map ONLY GET Requests
-    public String addNewCliente ( @RequestParam (value="nombreCliente") String nombreCliente, 
+    @PostMapping(value= "/add", params = {"nombreCliente","apellidoCliente","cuit"}) // Map ONLY GET Requests
+    public String addNewCliente ( @RequestParam (value="nombreCliente") String nombreCliente,
+    							@RequestParam (value="apellidoCliente") String apellidoCliente,
 								 @RequestParam (value="cuit") Integer cuit) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 		Cliente n = new Cliente();
 		n.setNombreCliente(nombreCliente);
+		n.setApellidoCliente(apellidoCliente);
 		n.setCUIT(cuit);
 		clienteRepository.save(n);
 		return "Saved";
@@ -61,16 +63,17 @@ public class ClienteController {
         	return "Error en el borrado";
     }
     
-    @PutMapping(value = "/update", params = {"idCliente","nombreCliente","cuit"})
+    @PutMapping(value = "/update", params = {"idCliente","nombreCliente","apellidoCliente","cuit"})
     public String update(@RequestParam (value="idCliente") Long idCliente, 
-    					 @RequestParam (value="nombreCliente") String nombreCliente, 
+    					 @RequestParam (value="nombreCliente") String nombreCliente,
+    					 @RequestParam (value="apellidoCliente") String apellidoCliente,
     					 @RequestParam (value="cuit") Integer cuit) {
         if(clienteRepository.existsById(idCliente)) {
         	Cliente update = new Cliente();
         	update.setIdCliente(idCliente);
         	update.setNombreCliente(nombreCliente);
-        	if(cuit!=null)
-        		update.setCUIT(cuit);
+        	update.setApellidoCliente(apellidoCliente);
+       		update.setCUIT(cuit);
         	clienteRepository.save(update);
         	return "Actualizado";
         }else        
