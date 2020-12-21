@@ -18,6 +18,9 @@ public class Cuenta {
 	private String moneda;
 	private Float balance;
 	
+	public Cuenta() {
+	}
+	
 	public Cuenta(Long idCliente,String moneda) {
 		this.alias="";
 		//generar alias aleatoriamente
