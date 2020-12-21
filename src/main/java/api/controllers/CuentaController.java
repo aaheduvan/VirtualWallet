@@ -2,9 +2,8 @@ package api.controllers;
 
 import api.domains.Cuenta;
 import api.repositories.CuentaRepository;
+import api.services.CuentaService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class CuentaController {
 	
 	@Autowired
-    private CuentaRepository cuentaRepository;	
+    private CuentaRepository cuentaRepository;
+	@Autowired
+    private CuentaService cuentaService;
+	
  
     @GetMapping(value = "/get", params = {"cvu"})
     public Optional<Cuenta> getCuenta(@RequestParam (value="cvu") Integer cvu) {
@@ -51,22 +53,12 @@ public class CuentaController {
     	return cuentaRepository.findAll();
     }
     
-    @PostMapping(value= "/add", params = {"cvu","alias","idCliente","moneda","balance"}) // Map ONLY GET Requests
-    public String addNewCuenta ( @RequestParam (value="cvu") Integer cvu, 
-								 @RequestParam (value="alias") String alias,
-								 @RequestParam (value="idCliente") Long idCliente, 
-								 @RequestParam (value="moneda") String moneda,
-								 @RequestParam (value="balance", required=false) Float balance) {
+    @PostMapping(value= "/add", params = {"idCliente","moneda"}) // Map ONLY GET Requests
+    public String addCuenta (@RequestParam (value="idCliente") Long idCliente, 
+								 @RequestParam (value="moneda") String moneda) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
-		Cuenta c = new Cuenta();
-		c.setCvu(cvu);
-		c.setAlias(alias);
-		c.setIdCliente(idCliente);
-		c.setMoneda(moneda);
-		c.setBalance(balance);
-		cuentaRepository.save(c);
-		return "Saved";
+		return cuentaService.addCuenta(idCliente,moneda);
 	}
     
     @DeleteMapping(value = "/delete", params = {"cvu"})
@@ -79,24 +71,23 @@ public class CuentaController {
         	return "Error en el borrado";
     }
     
-    @PutMapping(value = "/update", params = {"cvu","alias","idCliente","moneda","balance"})
-    public String update(@RequestParam (value="cvu") Integer cvu, 
-			 			@RequestParam (value="alias", required=false) String alias,
-			 			@RequestParam (value="idCliente", required=false) Long idCliente, 
-			 			@RequestParam (value="moneda", required=false) String moneda,
-			 			@RequestParam (value="balance", required=false) Float balance) {
+    @PutMapping(value = "/update", params = {"cvu","balance"})
+    public String updateBalanceByCVU(@RequestParam (value="cvu") Integer cvu, @RequestParam (value="balance") Float balance) {
         if(cuentaRepository.existsById(cvu)) {
-        	Cuenta update = new Cuenta();
-        	update.setCvu(cvu);
-        	update.setAlias(alias);
-        	update.setIdCliente(idCliente);
-        	update.setMoneda(moneda);
-        	if(balance!=null)
-        		update.setBalance(balance);
+        	Cuenta update = cuentaRepository.findById(cvu).get();
+        	update.setBalance(balance);
         	cuentaRepository.save(update);
-        	return "Actualizado";
-        }else        
-        	return "Error en la actualizacion";
+        	return "Balance Actualizado";
+        }else return "Error en la actualizacion";
     }
-
+    
+    @PutMapping(value = "/update", params = {"alias","balance"})
+    public String updateBalanceByAlias(@RequestParam (value="alias") String alias, @RequestParam (value="balance") Float balance) {
+        if(cuentaRepository.existsByAlias(alias)) {
+        	Cuenta update = cuentaRepository.findByAlias(alias).get();
+        	update.setBalance(balance);
+        	cuentaRepository.save(update);
+        	return "Balance Actualizado";
+        }else return "Error en la actualizacion";
+    }
 }

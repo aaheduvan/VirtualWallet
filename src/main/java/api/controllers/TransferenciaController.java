@@ -41,8 +41,8 @@ public class TransferenciaController {
     @GetMapping(value = "/get", params = {"cvu"})
     public List<Transferencia> getAllTransferenciasCuenta(@RequestParam (value="cvu") Integer cvu) {
     	List<Transferencia> listaTransf = new ArrayList<Transferencia>();
-    	listaTransf.addAll(transferenciaRepository.findByCuentaOrigen(cvu));
-    	listaTransf.addAll(transferenciaRepository.findByCuentaDestino(cvu));
+    	listaTransf.addAll(transferenciaRepository.findByIdCuentaOrigen(cvu));
+    	listaTransf.addAll(transferenciaRepository.findByIdCuentaDestino(cvu));
     	return listaTransf;
     }
          

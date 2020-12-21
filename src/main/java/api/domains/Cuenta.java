@@ -18,6 +18,14 @@ public class Cuenta {
 	private String moneda;
 	private Float balance;
 	
+	public Cuenta(Long idCliente,String moneda) {
+		this.alias="";
+		//generar alias aleatoriamente
+		this.idCliente=idCliente;
+		this.moneda=moneda;
+		this.balance=(float)0;
+	}
+	
 	public Integer getCvu() {
 		return cvu;
 	}

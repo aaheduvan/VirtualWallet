@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CuentaRepository extends CrudRepository<Cuenta, Integer> {
 	Optional<Cuenta> findByAlias(String alias);
+	boolean existsByAlias(String alias);
 	List<Cuenta> findByidCliente(Long idCliente);
 	List<Cuenta> findByMoneda(String moneda);
 	@Query(value = "SELECT *" + 
