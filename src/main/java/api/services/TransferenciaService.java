@@ -33,7 +33,7 @@ public class TransferenciaService {
 			if(cuentaRepository.existsById(idCuentaDestino)) {
 				Cuenta origen = cuentaRepository.findById(idCuentaOrigen).get();
 				Cuenta destino = cuentaRepository.findById(idCuentaDestino).get();
-				if(origen.getMoneda()==destino.getMoneda()) {
+				if(origen.getMoneda().equals(destino.getMoneda())) {
 					if(importe <= origen.getBalance()) {
 						Transferencia t = new Transferencia();
 						t.setIDCuentaOrigen(idCuentaOrigen);
