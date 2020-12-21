@@ -75,7 +75,7 @@ public class CuentaController {
     public String updateBalanceByCVU(@RequestParam (value="cvu") Integer cvu, @RequestParam (value="balance") Float balance) {
         if(cuentaRepository.existsById(cvu)) {
         	Cuenta update = cuentaRepository.findById(cvu).get();
-        	update.setBalance(balance);
+        	update.setBalance(update.getBalance()+balance);
         	cuentaRepository.save(update);
         	return "Balance Actualizado";
         }else return "Error en la actualizacion";
